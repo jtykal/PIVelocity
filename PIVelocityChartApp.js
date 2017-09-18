@@ -285,7 +285,7 @@ Ext.define('PIVelocityChartApp', {
         }
 
         var timeboxScope = this.getContext().getTimeboxScope();
-        if (timeboxScope && timeboxScope.isApplicable(this.model)) {
+        if (timeboxScope && timeboxScope.isApplicable(this.model) && !this._isByRelease()) {
             queries.push(timeboxScope.getQueryFilter());
         }
         if (this.getSetting('query')) {
