@@ -1,12 +1,12 @@
 {
-    "name": "PI Throughput/Velocity Chart",
-    "className": "PIVelocityChartApp",
+    "name": "User Story Throughput/Velocity Chart",
+    "className": "USVelocityChartApp",
     "server": "https://rally1.rallydev.com",
     "sdk": "2.1",
     "javascript": [
         "Utils.js",
         "Calculator.js",
-        "PIVelocityChartApp.js"
+        "USVelocityChartApp.js"
     ],
     "css": [
         "app.css"
