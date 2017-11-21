@@ -1,4 +1,4 @@
-Ext.define('PIVelocityChartApp', {
+Ext.define('USVelocityChartApp', {
     extend: 'Rally.app.App',
     componentCls: 'app',
 
@@ -11,8 +11,8 @@ Ext.define('PIVelocityChartApp', {
 
     config: {
         defaultSettings: {
-            bucketBy: 'quarter',
-            piType: 'portfolioitem/feature',
+            bucketBy: 'month',
+            piType: 'userstory',
             aggregateBy: 'count',
             query: ''
         }
@@ -36,8 +36,10 @@ Ext.define('PIVelocityChartApp', {
 
     getSettingsFields: function () {
         return [
+/*
             {
                 name: 'piType',
+
                 xtype: 'rallycombobox',
                 plugins: ['rallyfieldvalidationui'],
                 allowBlank: false,
@@ -77,6 +79,7 @@ Ext.define('PIVelocityChartApp', {
                     }
                 }
             },
+*/
             {
                 name: 'aggregateBy',
                 xtype: 'rallycombobox',
@@ -90,13 +93,8 @@ Ext.define('PIVelocityChartApp', {
                 store: {
                     fields: ['name', 'value'],
                     data: [
-                        { name: 'Accepted Leaf Story Count', value: 'acceptedleafcount' },
-                        { name: 'Accepted Leaf Story Plan Estimate', value: 'acceptedleafplanest' },
                         { name: 'Count', value: 'count' },
-                        { name: 'Leaf Story Count', value: 'leafcount' },
-                        { name: 'Leaf Story Plan Estimate', value: 'leafplanest' },
-                        { name: 'Preliminary Estimate', value: 'prelimest' },
-                        { name: 'Refined Estimate', value: 'refinedest' }
+                        { name: 'Story Points', value: 'planestimate' }
                     ]
                 },
                 lastQuery: ''
@@ -143,7 +141,7 @@ Ext.define('PIVelocityChartApp', {
             }
         ];
     },
-
+    
     _addChart: function () {
         var context = this.getContext(),
             whiteListFields = ['Milestones', 'Tags'],
@@ -256,14 +254,14 @@ Ext.define('PIVelocityChartApp', {
     },
 
     _getChartFetch: function () {
-        return _.compact(['ActualStartDate', 'ActualEndDate', 'Release', Utils.getFieldForAggregationType(this.getSetting('aggregateBy'))]);
+        return _.compact(['InProgressDate', 'AcceptedDate', 'Release', Utils.getFieldForAggregationType(this.getSetting('aggregateBy'))]);
     },
 
     _getChartSort: function () {
         if (this._isByRelease()) {
             return [{ property: 'Release.ReleaseDate', direction: 'ASC' }];
         } else {
-            return [{ property: 'ActualEndDate', direction: 'ASC' }];
+            return [{ property: 'AcceptedDate', direction: 'ASC' }];
         }
     },
 
@@ -278,7 +276,7 @@ Ext.define('PIVelocityChartApp', {
             });
         } else {
             queries.push({
-                property: 'ActualEndDate',
+                property: 'AcceptedDate',
                 operator: '!=',
                 value: null
             });
