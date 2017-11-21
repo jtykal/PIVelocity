@@ -22,7 +22,7 @@ Ext.define('Calculator', {
 
     _groupData: function (records) {
         return _.groupBy(records, function (record) {
-            var endDate = record.get('ActualEndDate');
+            var endDate = record.get('AcceptedDate');
             if (this.bucketBy === 'month') {
                 return moment(endDate).startOf('month').format('MMM \'YY');
             } else if (this.bucketBy === 'quarter') {
@@ -36,14 +36,14 @@ Ext.define('Calculator', {
     },
 
     _generateStackedColumns: function (categories, groupedData) {
-        var stackValues = ['Not Started', 'In Progress', 'Completed'];
+        var stackValues = ['Not Started', 'In Progress', 'Accepted'];
         var series = {};
         _.each(categories, function (category) {
             var group = groupedData[category];
             var recordsByStackValue = _.groupBy(group, function (record) {
-                if (record.get('ActualEndDate')) {
-                    return 'Completed';
-                } else if (record.get('ActualStartDate')) {
+                if (record.get('AcceptedDate')) {
+                    return 'Accepted';
+                } else if (record.get('InProgressDate')) {
                     return 'In Progress';
                 } else {
                     return 'Not Started';
