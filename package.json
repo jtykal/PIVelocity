@@ -1,6 +1,6 @@
 {
-  "name": "PIVelocityChart",
-  "version": "1.0.4",
+  "name": "USVelocityChart",
+  "version": "1.0.0",
   "private": true,
   "devDependencies": {
     "grunt": "1.0.1",
